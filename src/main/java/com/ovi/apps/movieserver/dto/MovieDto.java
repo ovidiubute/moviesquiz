@@ -9,16 +9,12 @@ public final class MovieDto {
     @NotEmpty
     private String name;
 
-    @NotEmpty
-    private String rating;
-
     public MovieDto() {
     }
 
-    public MovieDto(Long id, String name, String rating) {
+    public MovieDto(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.rating = rating;
     }
 
     public Long getId() {
@@ -27,9 +23,5 @@ public final class MovieDto {
 
     public String getName() {
         return name;
-    }
-
-    public String getRating() {
-        return rating;
     }
 }

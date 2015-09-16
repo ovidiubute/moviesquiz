@@ -1,13 +1,13 @@
 package com.ovi.apps.movieserver;
 
-import com.ovi.apps.movieserver.domain.DomainFactory;
 import com.ovi.apps.movieserver.domain.Movie;
 import com.ovi.apps.movieserver.dto.DtoFactory;
 import com.ovi.apps.movieserver.dto.MovieDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/movies")
@@ -15,9 +15,6 @@ public class MovieController {
 
     @Autowired
     private DtoFactory dtoFactory;
-
-    @Autowired
-    private DomainFactory domainFactory;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -30,10 +27,5 @@ public class MovieController {
         } else {
             throw new ResourceNotFoundException();
         }
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public MovieDto saveMovie(@Valid @RequestBody MovieDto movieDto) {
-        return dtoFactory.movieDto(movieRepository.save(domainFactory.fromDto(movieDto)));
     }
 }

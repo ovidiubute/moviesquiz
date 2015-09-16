@@ -20,19 +20,14 @@ public class Movie implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true, nullable = false)
     private String name;
-
-    @Column(name = "RATING")
-    @Enumerated(EnumType.ORDINAL)
-    private Rating rating;
 
     protected Movie() {
     }
 
-    public Movie(String name, Rating rating) {
+    public Movie(String name) {
         this.name = name;
-        this.rating = rating;
     }
 
     public Long getId() {
@@ -43,23 +38,9 @@ public class Movie implements Serializable {
         return name;
     }
 
-    public Rating getRating() {
-        return rating;
-    }
-
     @Override
     public String toString() {
         return String.format(
-                "Movie[id=%d, name='%s', rating='%s']",
-                id, name, rating.name());
-    }
-
-    public enum Rating {
-        UNRATED,
-        G,
-        PG,
-        PG13,
-        R,
-        NC17
+                "Movie[id=%d, name='%s']", id, name);
     }
 }

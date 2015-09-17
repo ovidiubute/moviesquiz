@@ -15,7 +15,7 @@ public class Movie implements Serializable {
             pkColumnName = "SEQ_NAME",
             valueColumnName = "SEQ_NUMBER",
             pkColumnValue = "MOVIE_SEQUENCE",
-            initialValue = 1000,
+            initialValue = 1000000,
             allocationSize = 100)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "MOVIE_GEN")
     private Long id;

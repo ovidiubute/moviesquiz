@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "QUIZES")
 public class Quiz implements Serializable {
     private static final long serialVersionUID = 3207557896655494094L;
 

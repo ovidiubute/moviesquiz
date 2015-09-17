@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Table(name = "USERS")
 public class User implements Serializable {
     private static final long serialVersionUID = 3107897822075094094L;
 

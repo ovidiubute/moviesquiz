@@ -1,4 +1,4 @@
-package com.ovi.apps.movieserver;
+package com.ovi.apps.movieserver.repository;
 
 import com.ovi.apps.movieserver.domain.User;
 import org.springframework.data.repository.CrudRepository;

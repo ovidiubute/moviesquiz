@@ -36,6 +36,11 @@ public class Quiz implements Serializable {
     @Column(name = "SCORE", nullable = true)
     private Float score;
 
+    @Column(name = "ANSWERS", nullable = true)
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private byte[] answers;
+
     protected Quiz() {
     }
 }

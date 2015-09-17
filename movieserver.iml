@@ -60,7 +60,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:1.7.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.9.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.12" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.187" level="project" />
@@ -72,5 +71,7 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:4.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:4.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.hateoas:spring-hateoas:0.19.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
   </component>
 </module>

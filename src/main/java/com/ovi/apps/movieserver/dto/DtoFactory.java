@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class DtoFactory {
     public MovieDto movieDto(Movie domainMovie) {
-        return new MovieDto(domainMovie.getId(), domainMovie.getName());
+        return new MovieDto(domainMovie.getId(), domainMovie.getName(), domainMovie.getReleaseYear());
     }
 }

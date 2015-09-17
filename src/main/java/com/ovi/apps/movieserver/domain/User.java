@@ -2,12 +2,14 @@ package com.ovi.apps.movieserver.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class User implements Serializable {
     private static final long serialVersionUID = 3107897822075094094L;
 
     @Id
+    @Column(name = "USER_ID", nullable = false)
     @TableGenerator(name = "USER_GEN",
             table = "SEQUENCES",
             pkColumnName = "SEQ_NAME",
@@ -24,7 +26,11 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    protected User() {}
+    @OneToMany(mappedBy = "owner", targetEntity = Quiz.class, fetch = FetchType.EAGER)
+    private List<Quiz> quizes;
+
+    protected User() {
+    }
 
     public User(String username, String email) {
         this.username = username;

@@ -29,7 +29,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public boolean isAnswerCorrect(AnswerDto answerDto) {
         final List<Long> movieIds = Arrays.asList(answerDto.getMovieIds());
-        final Iterable<Movie> dbMovies = movieRepository.findByIdOrderByReleaseYear(movieIds);
+        final Iterable<Movie> dbMovies = movieRepository.findByIdOrderByReleaseYearDesc(movieIds);
         final List<Movie> movies = new ArrayList<>();
         for (Movie dbMovie : dbMovies) {
             movies.add(dbMovie);

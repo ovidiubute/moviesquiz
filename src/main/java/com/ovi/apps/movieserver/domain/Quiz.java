@@ -2,6 +2,7 @@ package com.ovi.apps.movieserver.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "QUIZES")
@@ -42,5 +43,41 @@ public class Quiz implements Serializable {
     private byte[] answers;
 
     protected Quiz() {
+    }
+
+    public Quiz(User owner, Long startTimestamp) {
+        Objects.requireNonNull(owner);
+        Objects.requireNonNull(startTimestamp);
+
+        this.owner = owner;
+        this.startTimestamp = startTimestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public Long getStartTimestamp() {
+        return startTimestamp;
+    }
+
+    public Long getFinishTimestamp() {
+        return finishTimestamp;
+    }
+
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public byte[] getAnswers() {
+        return answers;
     }
 }

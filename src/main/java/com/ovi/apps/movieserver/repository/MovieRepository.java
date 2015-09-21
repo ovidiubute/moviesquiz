@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends PagingAndSortingRepository<Movie, Long> {
-    List<Movie> findByIdOrderByReleaseYear(List<Long> movieIds);
+    List<Movie> findByIdOrderByReleaseYearDesc(List<Long> movieIds);
 }

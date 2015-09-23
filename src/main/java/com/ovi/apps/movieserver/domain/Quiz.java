@@ -2,6 +2,7 @@ package com.ovi.apps.movieserver.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
@@ -79,5 +80,29 @@ public class Quiz implements Serializable {
 
     public byte[] getAnswers() {
         return answers;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
+    }
+
+    public void setFinishTimestamp(Long finishTimestamp) {
+        this.finishTimestamp = finishTimestamp;
+    }
+
+    public void setAnswer(int ordinal, boolean answer) {
+        if (answers == null) {
+            answers = new byte[] {(byte) ((answer) ? 1 : 0)};
+        } else {
+            if (answers.length < ordinal) {
+                answers = Arrays.copyOf(answers, ordinal);
+            }
+            answers[ordinal - 1] = (byte) ((answer) ? 1 : 0);
+        }
+    }
+
+    public float incrementAndGetScore(float inc) {
+        score += inc;
+        return score;
     }
 }

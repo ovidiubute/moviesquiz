@@ -18,7 +18,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public int numberOfQuizQuestions() {
-        return 10;
+        return 3;
     }
 
     public int numberOfQuizQuestionMovies() {

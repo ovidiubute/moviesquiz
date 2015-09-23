@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -38,16 +39,51 @@ public class QuizController {
     @Autowired
     private MovieRepository movieRepository;
 
-    @RequestMapping(value = "/answers", method = RequestMethod.POST)
-    public Boolean answer(@RequestBody @Valid AnswerDto answerDto) {
-        return quizService.isAnswerCorrect(answerDto);
+    @RequestMapping(value = "/{quizId:[\\d]+}/answers", method = RequestMethod.POST)
+    public QuizDto answer(@PathVariable @Valid Long quizId, @RequestBody @Valid AnswerDto answerDto, @RequestParam @Valid @Min(1) int ordinal) {
+        if (ordinal > quizService.numberOfQuizQuestions()) {
+            throw new IllegalArgumentException("Ordinal greater than maximum questions");
+        }
+
+        Quiz quiz = quizRepository.findOne(quizId);
+        if (quiz == null) {
+            throw new ResourceNotFoundException();
+        } else if (quiz.getFinished()) {
+            throw new IllegalStateException("Quiz already finished");
+        }
+
+        if (quiz.getAnswers() != null) {
+            if (quiz.getAnswers().length >= ordinal) {
+                throw new IllegalStateException("Question already answered");
+            } else if (quiz.getAnswers().length - ordinal > -1) {
+                throw new IllegalStateException("There are previous unanswered questions");
+            }
+        } else {
+            if (ordinal > 1) {
+                throw new IllegalStateException("There are previous unanswered questions");
+            }
+        }
+
+        final boolean isAnswerCorrect = quizService.isAnswerCorrect(answerDto);
+        if (isAnswerCorrect) {
+            quiz.setAnswer(ordinal, true);
+            quiz.incrementAndGetScore((float) 100 / quizService.numberOfQuizQuestions());
+        } else {
+            quiz.setAnswer(ordinal, false);
+        }
+        if (quiz.getAnswers().length == quizService.numberOfQuizQuestions()) {
+            quiz.setFinished(true);
+            quiz.setFinishTimestamp(timeProvider.getCurrentTimeMillis());
+        }
+        quiz = quizRepository.save(quiz);
+        return convertToDTO(quiz);
     }
 
     @RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.GET)
-    public Quiz getQuiz(@PathVariable("id") Long id) {
+    public QuizDto getQuiz(@PathVariable("id") Long id) {
         final Quiz quiz = quizRepository.findOne(id);
         if (quiz != null) {
-            return quiz;
+            return convertToDTO(quiz);
         } else {
             throw new ResourceNotFoundException();
         }
@@ -55,7 +91,8 @@ public class QuizController {
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public QuizQuestionDto getQuestion(@RequestParam @Valid int ordinal) {
-        final List<Movie> movieStream = movieRepository.findRandomMovies(new PageRequest(0, quizService.numberOfQuizQuestionMovies()));
+        final List<Movie> movieStream = movieRepository.findRandomMovies(new PageRequest(0,
+                quizService.numberOfQuizQuestionMovies()));
         return new QuizQuestionDto(ordinal, movieStream);
     }
 
@@ -67,5 +104,11 @@ public class QuizController {
         final Quiz savedQuiz = quizRepository.save(newQuiz);
         final UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.getEmail());
         return new QuizDto(savedQuiz.getId(), userDto, false, 0f, timeProvider.getCurrentTimeMillis(), -1);
+    }
+
+    private QuizDto convertToDTO(Quiz quiz) {
+        final User owner = quiz.getOwner();
+        return new QuizDto(quiz.getId(), new UserDto(owner.getId(), owner.getUsername(), owner.getEmail()),
+                quiz.getFinished(), quiz.getScore(), quiz.getStartTimestamp(), quiz.getFinishTimestamp());
     }
 }

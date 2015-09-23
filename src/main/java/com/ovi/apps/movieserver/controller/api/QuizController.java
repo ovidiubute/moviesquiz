@@ -53,11 +53,10 @@ public class QuizController {
         }
     }
 
-    @RequestMapping(value = "/questions/", method = RequestMethod.GET)
+    @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public QuizQuestionDto getQuestion(@RequestParam @Valid int ordinal) {
-        final List<Movie> movieStream = movieRepository.findRandomMovies(new PageRequest(0, quizService.numberOfQuizQuestions()));
-        QuizQuestionDto quizQuestionDto = new QuizQuestionDto(ordinal, movieStream);
-        return quizQuestionDto;
+        final List<Movie> movieStream = movieRepository.findRandomMovies(new PageRequest(0, quizService.numberOfQuizQuestionMovies()));
+        return new QuizQuestionDto(ordinal, movieStream);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

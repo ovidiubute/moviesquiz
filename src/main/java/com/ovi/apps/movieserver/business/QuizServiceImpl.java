@@ -21,6 +21,10 @@ public class QuizServiceImpl implements QuizService {
         return 10;
     }
 
+    public int numberOfQuizQuestionMovies() {
+        return 4;
+    }
+
     @Override
     public boolean isAnswerCorrect(AnswerDto answerDto) {
         final List<Long> movieIds = Arrays.asList(answerDto.getMovieIds());

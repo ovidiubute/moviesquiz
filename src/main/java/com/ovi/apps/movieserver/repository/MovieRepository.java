@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 
 @Repository
 public interface MovieRepository extends PagingAndSortingRepository<Movie, Long> {
-    List<Movie> findByIdOrderByReleaseYearDesc(List<Long> movieIds);
+    @Query("SELECT m FROM Movie m WHERE m.id IN :movieIds ORDER BY m.releaseYear DESC")
+    List<Movie> findByIdOrderByReleaseYearDesc(@Param("movieIds") List<Long> movieIds);
 
     @Query("SELECT m FROM Movie m ORDER BY random()")
     List<Movie> findRandomMovies(Pageable pageable);

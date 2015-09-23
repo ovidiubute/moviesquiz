@@ -6,4 +6,6 @@ public interface QuizService {
     int numberOfQuizQuestions();
 
     boolean isAnswerCorrect(AnswerDto answerDto);
+
+    int numberOfQuizQuestionMovies();
 }

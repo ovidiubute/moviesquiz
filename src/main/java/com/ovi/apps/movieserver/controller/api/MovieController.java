@@ -1,4 +1,4 @@
-package com.ovi.apps.movieserver.controller;
+package com.ovi.apps.movieserver.controller.api;
 
 import com.ovi.apps.movieserver.ResourceNotFoundException;
 import com.ovi.apps.movieserver.domain.Movie;
@@ -35,8 +35,8 @@ public class MovieController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     HttpEntity<PagedResources<Movie>> getAllMovies(Pageable pageable, PagedResourcesAssembler assembler) {
-        Page<Movie> persons = movieRepository.findAll(pageable);
+        Page<Movie> movies = movieRepository.findAll(pageable);
 
-        return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
+        return new ResponseEntity<>(assembler.toResource(movies), HttpStatus.OK);
     }
 }

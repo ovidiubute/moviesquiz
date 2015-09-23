@@ -22,11 +22,6 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public int numberOfQuizQuestionChoices() {
-        return 5;
-    }
-
-    @Override
     public boolean isAnswerCorrect(AnswerDto answerDto) {
         final List<Long> movieIds = Arrays.asList(answerDto.getMovieIds());
         final Iterable<Movie> dbMovies = movieRepository.findByIdOrderByReleaseYearDesc(movieIds);

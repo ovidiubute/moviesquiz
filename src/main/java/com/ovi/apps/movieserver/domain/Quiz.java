@@ -29,13 +29,13 @@ public class Quiz implements Serializable {
     private Long startTimestamp;
 
     @Column(name = "FINISH_TIMESTAMP", nullable = true)
-    private Long finishTimestamp;
+    private Long finishTimestamp = -1L;
 
     @Column(name = "FINISHED", nullable = false)
-    private Boolean finished;
+    private Boolean finished = false;
 
     @Column(name = "SCORE", nullable = true)
-    private Float score;
+    private Float score = 0.0f;
 
     @Column(name = "ANSWERS", nullable = true)
     @Lob

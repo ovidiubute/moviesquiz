@@ -8,14 +8,22 @@ public final class AnswerDto {
     @NotEmpty
     private Long[] movieIds;
 
+    @NotEmpty
+    private Integer ordinal;
+
     public AnswerDto() {
     }
 
-    public AnswerDto(Long[] movieIds) {
+    public AnswerDto(Long[] movieIds, Integer ordinal) {
         this.movieIds = movieIds;
+        this.ordinal = ordinal;
     }
 
     public Long[] getMovieIds() {
         return movieIds;
+    }
+
+    public Integer getOrdinal() {
+        return ordinal;
     }
 }

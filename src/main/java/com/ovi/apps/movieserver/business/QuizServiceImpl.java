@@ -1,7 +1,7 @@
 package com.ovi.apps.movieserver.business;
 
 import com.ovi.apps.movieserver.domain.Movie;
-import com.ovi.apps.movieserver.dto.AnswerDto;
+import com.ovi.apps.movieserver.dto.TryAnswerDto;
 import com.ovi.apps.movieserver.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +26,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public boolean isAnswerCorrect(AnswerDto answerDto) {
-        final List<Long> movieIds = Arrays.asList(answerDto.getMovieIds());
+    public boolean isAnswerCorrect(TryAnswerDto tryAnswerDto) {
+        final List<Long> movieIds = Arrays.asList(tryAnswerDto.getMovieIds());
         final Iterable<Movie> dbMovies = movieRepository.findByIdOrderByReleaseYearDesc(movieIds);
         final List<Movie> movies = new ArrayList<>();
         for (Movie dbMovie : dbMovies) {

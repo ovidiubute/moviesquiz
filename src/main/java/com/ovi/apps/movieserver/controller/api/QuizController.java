@@ -6,10 +6,7 @@ import com.ovi.apps.movieserver.business.TimeProvider;
 import com.ovi.apps.movieserver.domain.Movie;
 import com.ovi.apps.movieserver.domain.Quiz;
 import com.ovi.apps.movieserver.domain.User;
-import com.ovi.apps.movieserver.dto.AnswerDto;
-import com.ovi.apps.movieserver.dto.QuizDto;
-import com.ovi.apps.movieserver.dto.QuizQuestionDto;
-import com.ovi.apps.movieserver.dto.UserDto;
+import com.ovi.apps.movieserver.dto.*;
 import com.ovi.apps.movieserver.repository.MovieRepository;
 import com.ovi.apps.movieserver.repository.QuizRepository;
 import com.ovi.apps.movieserver.repository.UserRepository;
@@ -40,7 +37,7 @@ public class QuizController {
     private MovieRepository movieRepository;
 
     @RequestMapping(value = "/{quizId:[\\d]+}/answers", method = RequestMethod.POST)
-    public QuizDto answer(@PathVariable @Valid Long quizId, @RequestBody @Valid AnswerDto answerDto, @RequestParam @Valid @Min(1) int ordinal) {
+    public ConfirmAnswerDto answer(@PathVariable @Valid Long quizId, @RequestBody @Valid TryAnswerDto tryAnswerDto, @RequestParam @Valid @Min(1) int ordinal) {
         if (ordinal > quizService.numberOfQuizQuestions()) {
             throw new IllegalArgumentException("Ordinal greater than maximum questions");
         }
@@ -64,7 +61,7 @@ public class QuizController {
             }
         }
 
-        final boolean isAnswerCorrect = quizService.isAnswerCorrect(answerDto);
+        final boolean isAnswerCorrect = quizService.isAnswerCorrect(tryAnswerDto);
         if (isAnswerCorrect) {
             quiz.setAnswer(ordinal, true);
             quiz.incrementAndGetScore((float) 100 / quizService.numberOfQuizQuestions());
@@ -76,7 +73,8 @@ public class QuizController {
             quiz.setFinishTimestamp(timeProvider.getCurrentTimeMillis());
         }
         quiz = quizRepository.save(quiz);
-        return convertToDTO(quiz);
+        final QuizDto quizDto = convertToDTO(quiz);
+        return new ConfirmAnswerDto(quizDto, isAnswerCorrect);
     }
 
     @RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.GET)
@@ -90,10 +88,10 @@ public class QuizController {
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
-    public QuizQuestionDto getQuestion(@RequestParam @Valid int ordinal) {
+    public QuizQuestionDto getQuestion() {
         final List<Movie> movieStream = movieRepository.findRandomMovies(new PageRequest(0,
                 quizService.numberOfQuizQuestionMovies()));
-        return new QuizQuestionDto(ordinal, movieStream);
+        return new QuizQuestionDto(movieStream);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

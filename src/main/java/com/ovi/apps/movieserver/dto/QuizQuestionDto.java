@@ -7,12 +7,9 @@ import java.util.List;
 
 @Dto
 public class QuizQuestionDto {
-    private Integer ordinal;
-
     private LinkedList<Movie> movies;
 
-    public QuizQuestionDto(Integer ordinal, List<Movie> movies) {
-        this.ordinal = ordinal;
+    public QuizQuestionDto(List<Movie> movies) {
         this.movies = new LinkedList<>();
         movies.stream().forEach(this.movies::push);
     }
@@ -21,12 +18,8 @@ public class QuizQuestionDto {
         return movies;
     }
 
-    public Integer getOrdinal() {
-        return ordinal;
-    }
-
     @Override
     public String toString() {
-        return String.format("QuizQuestionDto[ordinal='%d', movies='%s']", ordinal, movies);
+        return String.format("QuizQuestionDto[movies='%s']", movies);
     }
 }

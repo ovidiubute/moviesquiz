@@ -12,8 +12,8 @@
             <h2>Movie quiz!</h2>
             <h3>Sort the movies in order of their release dates</h3>
             <p>Question #{{ ordinal }}</p>
-            <ul class="list" ui-sortable ng-model="items">
-                <li ng-repeat="item in items">{{ item.name }}</li>
+            <ul class="list-group" ui-sortable ng-model="items">
+                <li class="list-group-item" ng-repeat="item in items">{{ item.name }}</li>
             </ul>
             <button class="btn" type="submit" ng-click="submitAnswer()">OK</button><br/>
             <button class="btn" type="submit" ng-click="startQuiz()">START</button>

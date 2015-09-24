@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
-    @RequestMapping("/index.html")
+    @RequestMapping("/src/main/webapp/index.html")
     public String index() {
         return "WEB-INF/views/index.html";
     }
@@ -25,13 +25,13 @@ public class IndexController {
         return "WEB-INF/views/login.html";
     }
 
-    @RequestMapping("/login.html")
+    @RequestMapping("/src/main/webapp/login.html")
     public String login() {
         return "WEB-INF/views/login.html";
     }
 
     // Error page
-    @RequestMapping("/error.html")
+    @RequestMapping("/src/main/webapp/error.html")
     public String error(HttpServletRequest request, Model model) {
         model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code"));
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");

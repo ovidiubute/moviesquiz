@@ -26,33 +26,27 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.dto;
+package com.ovi.apps.movieserver.message;
 
-public class UserDto {
-    private Long id;
+public final class Message {
+    private final MessageType type;
 
-    private String username;
+    private final String text;
 
-    private String email;
-
-    public UserDto() {
+    public Message(MessageType type, String text) {
+        this.type = type;
+        this.text = text;
     }
 
-    public UserDto(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
+    public MessageType getType() {
+        return type;
     }
 
-    public Long getId() {
-        return id;
+    public String getText() {
+        return text;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
+    public String toString() {
+        return type + ": " + text;
     }
 }

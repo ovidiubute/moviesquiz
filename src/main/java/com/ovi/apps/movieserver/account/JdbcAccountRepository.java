@@ -26,24 +26,45 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.repository;
+package com.ovi.apps.movieserver.account;
 
-import com.ovi.apps.movieserver.domain.Movie;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Table;
-import java.util.List;
-import java.util.stream.Stream;
+import javax.inject.Inject;
 
 @Repository
-public interface MovieRepository extends PagingAndSortingRepository<Movie, Long> {
-    @Query("SELECT m FROM Movie m WHERE m.id IN :movieIds ORDER BY m.releaseYear DESC")
-    List<Movie> findByIdOrderByReleaseYearDesc(@Param("movieIds") List<Long> movieIds);
+public class JdbcAccountRepository implements AccountRepository {
+    private final JdbcTemplate jdbcTemplate;
 
-    @Query("SELECT m FROM Movie m ORDER BY random()")
-    List<Movie> findRandomMovies(Pageable pageable);
+    private final PasswordEncoder passwordEncoder;
+
+    @Inject
+    public JdbcAccountRepository(JdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Transactional
+    public void createAccount(Account user) throws UsernameAlreadyInUseException {
+        try {
+            jdbcTemplate.update(
+                    "INSERT INTO Account (firstName, lastName, username, password) VALUES (?, ?, ?, ?)",
+                    user.getFirstName(), user.getLastName(), user.getUsername(),
+                    passwordEncoder.encode(user.getPassword()));
+        } catch (DuplicateKeyException e) {
+            throw new UsernameAlreadyInUseException(user.getUsername());
+        }
+    }
+
+    public Account findAccountByUsername(String username) {
+        return jdbcTemplate.queryForObject("SELECT username, firstName, lastName FROM Account WHERE username = ?",
+                (resultSet, rowNum) -> {
+                    return new Account(resultSet.getString("username"), null, resultSet.getString("firstName"),
+                            resultSet.getString("lastName"));
+                }, username);
+    }
 }

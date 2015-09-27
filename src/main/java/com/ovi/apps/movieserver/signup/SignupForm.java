@@ -26,33 +26,64 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.dto;
+package com.ovi.apps.movieserver.signup;
 
-public class UserDto {
-    private Long id;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.social.connect.UserProfile;
 
+import javax.validation.constraints.Size;
+
+public class SignupForm {
+
+    @NotEmpty
     private String username;
 
-    private String email;
+    @Size(min = 6, message = "must be at least 6 characters")
+    private String password;
 
-    public UserDto() {
-    }
+    @NotEmpty
+    private String firstName;
 
-    public UserDto(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
+    @NotEmpty
+    private String lastName;
 
-    public Long getId() {
-        return id;
+    public static SignupForm fromProviderUser(UserProfile providerUser) {
+        SignupForm form = new SignupForm();
+        form.setFirstName(providerUser.getFirstName());
+        form.setLastName(providerUser.getLastName());
+        form.setUsername(providerUser.getUsername());
+        return form;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getEmail() {
-        return email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

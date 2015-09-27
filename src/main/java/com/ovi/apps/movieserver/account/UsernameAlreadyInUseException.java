@@ -26,33 +26,10 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.dto;
+package com.ovi.apps.movieserver.account;
 
-public class UserDto {
-    private Long id;
-
-    private String username;
-
-    private String email;
-
-    public UserDto() {
-    }
-
-    public UserDto(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
+public class UsernameAlreadyInUseException extends Exception {
+    public UsernameAlreadyInUseException(String username) {
+        super("The username '" + username + "' is already in use.");
     }
 }

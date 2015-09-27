@@ -26,33 +26,15 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.dto;
+package com.ovi.apps.movieserver.signin;
 
-public class UserDto {
-    private Long id;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-    private String username;
-
-    private String email;
-
-    public UserDto() {
-    }
-
-    public UserDto(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
+@Controller
+public class SigninController {
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public void signin() {
     }
 }

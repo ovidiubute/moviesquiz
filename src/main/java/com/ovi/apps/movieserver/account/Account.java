@@ -26,33 +26,37 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.dto;
+package com.ovi.apps.movieserver.account;
 
-public class UserDto {
-    private Long id;
+public class Account {
+    private final String username;
 
-    private String username;
+    private final String password;
 
-    private String email;
+    private final String firstName;
 
-    public UserDto() {
-    }
+    private final String lastName;
 
-    public UserDto(Long id, String username, String email) {
-        this.id = id;
+    public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

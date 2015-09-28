@@ -26,42 +26,13 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver;
+package com.ovi.apps.movieserver.controller.signin;
 
-import com.ovi.apps.movieserver.signin.SimpleSignInAdapter;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.support.ConnectionFactoryRegistry;
-import org.springframework.social.connect.web.SignInAdapter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-@ComponentScan(basePackages="com.ovi.apps.movieserver")
-@EnableConfigurationProperties
-@SpringBootApplication
-public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(2);
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        return new ConnectionFactoryRegistry();
-    }
-
-    @Bean
-    public SignInAdapter signInAdapter() {
-        return new SimpleSignInAdapter(new HttpSessionRequestCache());
+public class SignInUtils {
+    public static void signin(String userId) {
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, null));
     }
 }

@@ -26,15 +26,49 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.signin;
+package com.ovi.apps.movieserver.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-public class SigninController {
-    @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public void signin() {
+public class IndexController {
+    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
+    public String index() {
+        return "WEB-INF/views/index.html";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String indexRedirect() {
+        return "redirect:index.html";
+    }
+
+    // Login form with error
+    @RequestMapping(value = "/login-error.html", method = RequestMethod.GET)
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "WEB-INF/views/login.html";
+    }
+
+    @RequestMapping(value = "/login.html", method = RequestMethod.GET)
+    public String login() {
+        return "WEB-INF/views/login.html";
+    }
+
+    // Error page
+    @RequestMapping(value = "/error.html", method = RequestMethod.GET)
+    public String error(HttpServletRequest request, Model model) {
+        model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code"));
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        String errorMessage = null;
+        if (throwable != null) {
+            errorMessage = throwable.getMessage();
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        return "WEB-INF/views/error.html";
     }
 }

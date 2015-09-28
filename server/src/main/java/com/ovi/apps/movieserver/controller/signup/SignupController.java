@@ -26,7 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.signup;
+package com.ovi.apps.movieserver.controller.signup;
 
 import com.ovi.apps.movieserver.account.Account;
 import com.ovi.apps.movieserver.account.AccountRepository;

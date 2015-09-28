@@ -26,7 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.ovi.apps.movieserver.signin;
+package com.ovi.apps.movieserver.controller.signin;
 
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.RequestCache;

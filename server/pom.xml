@@ -7,11 +7,14 @@
     <parent>
         <artifactId>moviequiz</artifactId>
         <groupId>com.ovi.apps</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>moviequiz-server</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>Movie Quiz Server module</name>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,27 +62,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
         </dependency>
-
-        <!-- Client -->
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>1.4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-sortable</artifactId>
-            <version>0.13.0-1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>underscorejs</artifactId>
-            <version>1.8.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.1.0</version>
+            <groupId>com.ovi.apps</groupId>
+            <artifactId>moviequiz-client</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Testing -->

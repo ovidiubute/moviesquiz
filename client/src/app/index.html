@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Movie Quiz</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <script src="js/index.js"></script>
+</head>
+<body data-ng-app="ovi.moviequiz.app">
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#">Quiz</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a ui-sref="home">Home</a></li>
+        <li><a ui-sref="account">Profile</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div ui-view></div>
+</div>
+
+</body>
+</html>
